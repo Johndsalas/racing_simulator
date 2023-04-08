@@ -1,46 +1,92 @@
-''' main file for racing simulator'''
+''' Creating gui for the game'''
 
-from ponies import Poney
-import functions as f
+import pygame
+import ponies
+from sys import exit
 
-# makin ponies putin them in variables
-a = Poney("Shamrock", speed = 1)
+# makes pygame work
+pygame.init()
 
-b = Poney("Constantine", speed = 1)
+# making window
+width, height = 900, 675
+screen = pygame.display.set_mode((width, height))
 
-c = Poney("StarScream", speed = 1)
+# setting title
+pygame.display.set_caption("Racing Simmulator 9000")
 
-# stableling ponies inside a list
-ponies = [a, b, c]
+# time object
+clock = pygame.time.Clock()
 
-# introduces the ponies
-f.intro_ponies(ponies)
+# import and scale background serface object
+grass_surface = pygame.image.load('images/grass.jpg')
+grass_surface = pygame.transform.scale(grass_surface, (width, height))
 
-# is a poney going faster 
-going_faster = False
+# text objects
+test_font = pygame.font.Font(None, 75)
+text_surace = test_font.render("Pony Racing Time!!!!", False, 'Black')
 
-# main game loop
-while True:
+start_line_txt = pygame.font.Font(None, 30)
+start_line_txt = start_line_txt.render("Start", False, 'Black')
 
-    # increase the speed of a random poney and save that poney to a variabel
-    boost, boosted = f.speed_boost(ponies)
+finish_line_txt = pygame.font.Font(None, 30)
+finish_line_txt = finish_line_txt.render("Finish", False, 'Black')
 
-    # moves ponies location and prints results
-    f. move_ponies(ponies)
+# start line object
+start_line = pygame.Surface((10,575))
+start_line.fill('Black')
 
-    # return boosted poney to normal speed
-    f.normalize_speed(boost, boosted)
+# finish line x coordanent
+final_x = 750
 
-    # checks for end of race
-    if f.race_finished(ponies):
+# finish line object
+finish_line = pygame.Surface((10,575))
+start_line.fill('Black')
 
-        break
+# make ponies and put them in a stable
+pony_stable = ponies.make_ponies(final_x)
 
-# prints results of race
-f.give_result(ponies)
+def main():
+    ''' funtion for main game loop'''
 
-print("")
-print("That is all thak you for playing!")
+    while True:
+        
+        for event in pygame.event.get():
 
+            # close game
+            if event.type == pygame.QUIT:
+  
+                pygame.quit() # exits pygame
+                exit() # exits code
 
+        # adds surface
+        screen.blit(grass_surface,(0,0))
 
+        # adds start line and text
+        screen.blit(start_line, (105, 75))
+        screen.blit(start_line_txt, (90, 50))
+
+        # adds finishline and text
+        screen.blit(finish_line, (final_x + 95,75))
+        screen.blit(finish_line_txt, (final_x + 80, 50))
+
+        # adds text
+        screen.blit(text_surace, (200, 5))
+
+        # adds ponies to screen
+        for pony in pony_stable:
+
+            screen.blit(pony.image, (pony.x, pony.y))
+
+            # moove ponies toward starting line
+            pony.move_x()
+            pony.max_x()
+
+        # updates display with new info
+        pygame.display.update()
+
+        # set max framerate to 60
+        clock.tick(10)
+
+if __name__ == '__main__':
+
+    main()
