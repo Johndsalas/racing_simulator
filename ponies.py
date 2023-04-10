@@ -18,11 +18,16 @@ class Pony:
         self.y = y
         self.final_x = final_x
 
+    # sets x coordinante to a new value
+    def set_x(self, new_x):
+
+        self.x = new_x
+
 
     # moves ponies toward finish line
-    def move_x(self):
+    def move_x(self, amount):
 
-        self.x += r.randint(1,31)
+        self.x += amount
 
 
     # stops ponies at finish line
@@ -32,16 +37,12 @@ class Pony:
 
             self.x = self.final_x
 
-
-def make_ponies(final_x):
+def make_ponies(starting_x, final_x):
     ''' returns a list of poney objects'''
 
     # pony demintions
     width = 100
     height = 75
-
-    # starting line
-    start = 5
 
     # scaling pony images
     p1 = pygame.image.load('images/p1.jpg')
@@ -63,17 +64,21 @@ def make_ponies(final_x):
     p6 = pygame.transform.scale(p6, (width, height))
 
     # making ponies in variables
-    a = Pony("Shamrock", p1, start, 75, final_x)
+    a = Pony("Shamrock", p1, starting_x, 75, final_x)
 
-    b = Pony("Constantine", p2, start, 175, final_x)
+    b = Pony("Constantine", p2,starting_x, 175, final_x)
 
-    c = Pony("StarScream", p3, start, 275, final_x)
+    c = Pony("StarScream", p3, starting_x, 275, final_x)
 
-    d = Pony("Maxi", p4, start, 375, final_x)
+    d = Pony("Maxi", p4, starting_x, 375, final_x)
 
-    e = Pony("Hoggle", p5, start, 475, final_x)
+    e = Pony("Hoggle", p5, starting_x, 475, final_x)
 
-    f = Pony("Trogdor", p6, start, 575, final_x)
+    f = Pony("Trogdor", p6, starting_x, 575, final_x)
 
-    # stableling ponies inside a list
-    return [a, b, c, d, e, f]
+    # stableling ponies inside a list in a random order
+    stable = [a, b, c, d, e, f]
+
+    r.shuffle(stable)
+
+    return stable
