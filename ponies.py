@@ -1,11 +1,11 @@
 ''' contains Pony class and function make_ponies that makes a list of 6 ponies'''
 
+
 import pygame
-import random as r
 
 
 class Pony:
-    ''' creates pony objects with name, image, x coordanent, and y coordanent and final x coordanent
+    ''' creates pony objects with name, image, x coordanent, y coordanent and final x coordanent
         poney objects can move toward thier final x coordanent and can reset thier x coordanent if they go past it
     '''
 
@@ -17,6 +17,7 @@ class Pony:
         self.x = x
         self.y = y
         self.final_x = final_x
+
 
     # sets x coordinante to a new value
     def set_x(self, new_x):
@@ -36,6 +37,7 @@ class Pony:
         if self.x > self.final_x:
 
             self.x = self.final_x
+
 
 def make_ponies(starting_x, final_x):
     ''' returns a list of poney objects'''
@@ -78,7 +80,5 @@ def make_ponies(starting_x, final_x):
 
     # stableling ponies inside a list in a random order
     stable = [a, b, c, d, e, f]
-
-    r.shuffle(stable)
 
     return stable
